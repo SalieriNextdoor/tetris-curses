@@ -96,6 +96,7 @@ int main() {
   point startpos = {1, NCOLS / 2};
   t_block *cur = pick_random_block(map, startpos);
   t_block *next = pick_random_block(map, startpos);
+  t_block *prev = NULL;
   init_map(map, NLINES, NCOLS);
   update_nextwin(nextwin, next);
 
@@ -118,7 +119,7 @@ int main() {
         break;
       case 'z':
       case 'Z':
-        rotate_block(cur);
+        rotate_block(map, cur);
         break;
       case ' ':
         while (!update_pos_ver(map, cur))
@@ -131,7 +132,8 @@ int main() {
     // every two UDELAYs
     if ((accum % 2 == 0 && update_pos_ver(map, cur)) || skip) {
       skip = false;
-      free(cur);
+      if (prev != NULL) free(prev);
+      prev = cur;
       cur = next;
       next = pick_random_block(map, startpos);
       update_nextwin(nextwin, next);
@@ -146,7 +148,7 @@ int main() {
       wgetch(gamewin);
       break;
     }
-    while ((line = check_game_state(map)) != -1) {
+    while (prev != NULL && (line = check_game_state(map, prev)) != -1) {
       empty_line(map, line);
       move_lines_down(map, line);
       scorecnt++;

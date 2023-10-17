@@ -97,7 +97,7 @@ t_block *pick_random_block(char map[NLINES + 1][NCOLS + 1], point pos) {
   picked = new_block(map, pos, pick);
 
   int rotations = (rand() + 1) % 4;
-  for (int i = 0; i < rotations; i++) rotate_block(picked);
+  for (int i = 0; i < rotations; i++) rotate_block(map, picked);
 
   return picked;
 }
@@ -140,25 +140,34 @@ int get_max_height(t_block *block) {
  *  Given a block, rotates its map 90 degrees clockwise.
  *  Also does some correction on its position.
  * */
-void rotate_block(t_block *block) {
+void rotate_block(char map[NLINES + 1][NCOLS + 1], t_block *block) {
   if (block->type == T_OBLOCK) return;
+  t_block temp;
+  copy_matrix(block->map, temp.map);
+  temp.pos.x = block->pos.x;
+  temp.pos.y = block->pos.y;
   int pivoti = 0, pivotj = 0;
 
   for (int i = 0; i < 4; i++)
-    for (int j = 0; j < i; j++) swap(&block->map[i][j], &block->map[j][i]);
+    for (int j = 0; j < i; j++) swap(&temp.map[i][j], &temp.map[j][i]);
 
   for (int i = 0; i < 4; i++)
-    for (int j = 0; j < 2; j++) swap(&block->map[i][j], &block->map[i][3 - j]);
+    for (int j = 0; j < 2; j++) swap(&temp.map[i][j], &temp.map[i][3 - j]);
 
   for (int i = 0; i < 4; i++)
     for (int j = 0; j < 4; j++)
-      if (block->map[j][i] && !pivoti) {
+      if (temp.map[j][i] && !pivoti) {
         pivoti = j;
         pivotj = i;
       }
 
-  block->pos.x -= pivotj - 1;
-  block->pos.y -= pivoti - 1;
+  temp.pos.x -= pivotj - 1;
+  temp.pos.y -= pivoti - 1;
+  if (!check_for_col(map, &temp)) {
+    copy_matrix(temp.map, block->map);
+    block->pos.y = temp.pos.y;
+    block->pos.x = temp.pos.x;
+  }
 }
 
 /*

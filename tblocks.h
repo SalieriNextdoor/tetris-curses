@@ -23,7 +23,7 @@ typedef struct _t_block {
   enum tblock_type type;
 } t_block;
 
-void rotate_block(t_block *block);
+void rotate_block(char map[NLINES + 1][NCOLS + 1], t_block *block);
 void update_pos_hor(char map[NLINES + 1][NCOLS + 1], t_block *block, bool dir,
                     int max_x);
 bool update_pos_ver(char map[NLINES + 1][NCOLS + 1], t_block *block);

@@ -47,13 +47,12 @@ void draw_map(WINDOW* win, char map[NLINES + 1][NCOLS + 1]) {
 }
 
 /*
- * Returns the index of a complete line on the map within [0,NLINES-1],
- * if it exists.
- * Otherwise returns -1
+ * Returns the index of a complete line on the map within
+ * [block->pos.y,NLINES-1], if it exists. Otherwise returns -1
  */
-int check_game_state(char map[NLINES + 1][NCOLS + 1]) {
+int check_game_state(char map[NLINES + 1][NCOLS + 1], t_block* last_block) {
   int line = 0;
-  for (int i = NLINES - 1; i >= 0; i--) {
+  for (int i = last_block->pos.y; i < NLINES; i++) {
     line = i;
     for (int j = 0; j < NCOLS; j++) {
       if (!map[i][j]) {
