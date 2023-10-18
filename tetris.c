@@ -132,7 +132,6 @@ int main() {
     // every two UDELAYs
     if ((accum % 2 == 0 && update_pos_ver(map, cur)) || skip) {
       skip = false;
-      if (prev != NULL) free(prev);
       prev = cur;
       cur = next;
       next = pick_random_block(map, startpos);
@@ -148,11 +147,16 @@ int main() {
       wgetch(gamewin);
       break;
     }
-    while (prev != NULL && (line = check_game_state(map, prev)) != -1) {
-      empty_line(map, line);
-      move_lines_down(map, line);
-      scorecnt++;
+    if (prev != NULL) {
+      while ((line = check_game_state(map, prev)) != -1) {
+        empty_line(map, line);
+        move_lines_down(map, line);
+        scorecnt++;
+      }
+      free(prev);
+      prev = NULL;
     }
+
     update_score(scorewin, &score, scorecnt);
     scorecnt = 0;
 
@@ -162,6 +166,7 @@ int main() {
 
   cleanup(&gamewin, &borderwin, &nextwin, &scorewin);
   if (cur != NULL) free(cur);
+  if (prev != NULL) free(prev);
 
   endwin();
   return 0;
