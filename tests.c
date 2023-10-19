@@ -43,8 +43,10 @@ void tcommons_copy_matrix(void) {
 
 void tcommons_reverse(void) {
   char *test = strdup("Hello");
+  ifnullexit(test, "tcommons_reverse1");
   assert(strcmp("olleH", reverse(test, 5)) == 0);
   char *test2 = strdup("");
+  ifnullexit(test2, "tcommons_reverse2");
   assert(strcmp("", reverse(test2, 0)) == 0);
   free(test);
   free(test2);
@@ -52,6 +54,7 @@ void tcommons_reverse(void) {
 
 void tcommons_itoa(void) {
   char *test = (char *)malloc(10 * sizeof(char));
+  ifnullexit(test, "tcommons_itoa");
   assert(strcmp(itoa(0, test), "0") == 0);
   assert(strcmp(itoa(10, test), "10") == 0);
   assert(strcmp(itoa(100000000, test), "100000000") == 0);
