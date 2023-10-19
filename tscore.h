@@ -5,6 +5,8 @@
 #define TSCORE_H
 #include "tcommons.h"
 
+#define TSDIGITS 7
+
 typedef struct _tscore {
   uint score;
   char *scorestr;

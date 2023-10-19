@@ -12,7 +12,7 @@
  *  Given a map, initializes all its lines till NLINES-1 to 0.
  *  Line NLINES is initialized to 8 to represent the bottom border.
  * */
-void init_map(char map[NLINES + 1][NCOLS + 1], int max_y, int max_x) {
+void init_map(char map[NLINES + 1][NCOLS + 1]) {
   for (int i = 0; i < NLINES; i++)
     for (int j = 0; j < COLS; j++) map[i][j] = 0;
 

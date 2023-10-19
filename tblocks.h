@@ -24,8 +24,7 @@ typedef struct _t_block {
 } t_block;
 
 void rotate_block(char map[NLINES + 1][NCOLS + 1], t_block *block);
-void update_pos_hor(char map[NLINES + 1][NCOLS + 1], t_block *block, bool dir,
-                    int max_x);
+void update_pos_hor(char map[NLINES + 1][NCOLS + 1], t_block *block, bool dir);
 bool update_pos_ver(char map[NLINES + 1][NCOLS + 1], t_block *block);
 void draw_tblock(WINDOW *win, t_block *block);
 t_block *pick_random_block(char map[NLINES + 1][NCOLS + 1], point pos);

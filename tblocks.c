@@ -176,8 +176,7 @@ void rotate_block(char map[NLINES + 1][NCOLS + 1], t_block *block) {
  *  If this results in the block going beyond the border or
  *  colliding with another block, cancels the update.
  * */
-void update_pos_hor(char map[NLINES + 1][NCOLS + 1], t_block *block, bool dir,
-                    int max_x) {
+void update_pos_hor(char map[NLINES + 1][NCOLS + 1], t_block *block, bool dir) {
   int min_width = get_min_width(block);
   int max_width = get_max_width(block);
   if (dir) {

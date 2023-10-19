@@ -5,8 +5,6 @@
 
 #include <string.h>
 
-#define TSDIGITS 7
-
 /*
  *  Draws the score window with the current score.
  * */
@@ -49,9 +47,8 @@ WINDOW *init_scorewin(point startpos, tscore *score, int width, int height) {
 /*
  *  Given the amount of lines cleared at once, adds the corresponding
  *  value to the score.
- *  It then calls draw_scorewin and refreshes.
  * */
-void update_score(WINDOW *scorewin, tscore *score, int lines_cleared) {
+void update_score_val(tscore *score, int lines_cleared) {
   switch (lines_cleared) {
     case 0:
       return;
@@ -70,6 +67,14 @@ void update_score(WINDOW *scorewin, tscore *score, int lines_cleared) {
       break;
   }
   score->scorestr = itoa(score->score, score->scorestr);
+}
+
+/*
+ *  Updates the struct with a call to update_score_val.
+ *  It then calls draw_scorewin and refreshes the window.
+ * */
+void update_score(WINDOW *scorewin, tscore *score, int lines_cleared) {
+  update_score_val(score, lines_cleared);
   draw_scorewin(scorewin, score);
   wrefresh(scorewin);
 }

@@ -97,7 +97,7 @@ int main() {
   t_block *cur = pick_random_block(map, startpos);
   t_block *next = pick_random_block(map, startpos);
   t_block *prev = NULL;
-  init_map(map, NLINES, NCOLS);
+  init_map(map);
   update_nextwin(nextwin, next);
 
   uint accum = 1;
@@ -112,10 +112,10 @@ int main() {
     usleep(DELAYU);
     switch (c) {
       case KEY_RIGHT:
-        update_pos_hor(map, cur, false, NCOLS);
+        update_pos_hor(map, cur, false);
         break;
       case KEY_LEFT:
-        update_pos_hor(map, cur, true, NCOLS);
+        update_pos_hor(map, cur, true);
         break;
       case 'z':
       case 'Z':
